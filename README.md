@@ -7,7 +7,11 @@ py -m pip install --user virtualenv
 py -m venv env
 
 ## Activate virtual environment
-./env/scripts/activate.bat
+.\env\scripts\activate.bat
 
 ## Install requirements
 pip install -r requirements.txt
+
+## Run BFF
+py main.py
+

@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restplus import Api
 
-REST_API = Blueprint('rest_api', __name__, url_prefix='/api/')
+REST_API = Blueprint('rest_api', __name__, url_prefix='/api')
 
 
 def get_blueprint():
