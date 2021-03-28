@@ -1,5 +1,4 @@
-from typing import Optional
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from services.dummy.v1 import dummy_v1
@@ -21,9 +20,9 @@ app.add_middleware(
 app.include_router(dummy_v1.router)
 
 @app.get("/")
-def read_root():
-    return {"Description": "Analyze-That-BFF"}
-
-# @app.get("/items/{item_id}")
-# def read_item(item_id: int, q: Optional[str] = None):
-#     return {"item_id": item_id, "q": q}
+def read_root(request: Request):
+    url = request.url
+    return {
+        "Description": "Analyze-That-BFF",
+        "Docs": f"{url}docs"
+        }

@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from typing import Optional
 
 router = APIRouter(
     prefix="/api/v1/dummy",
@@ -20,3 +21,8 @@ DUMMYS = [
 @router.get("/")
 def read_dummys():
     return DUMMYS
+
+@router.get("/{id}")
+def read_dummy(id: int, q: Optional[str] = None):
+    return {"id": id, "q": q}
+
