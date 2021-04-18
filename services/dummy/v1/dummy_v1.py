@@ -1,11 +1,8 @@
 from fastapi import APIRouter, Depends
 from typing import Optional
-from core import get_req
+from core.auth import get_req
 
-router = APIRouter(
-    prefix="/api/v1/dummy",
-    tags=["dummys"]
-)
+router = APIRouter()
 
 DUMMYS = [
     {

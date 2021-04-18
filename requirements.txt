@@ -3,3 +3,5 @@ uvicorn[standard]
 pytest
 fastapi-auth0
 python-dotenv
+databases[postgresql]
+SQLAlchemy

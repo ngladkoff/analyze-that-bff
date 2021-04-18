@@ -1,46 +1,38 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from core import get_req
-
-# Import Endpoints
-from services.dummy.v1 import dummy_v1
-
-
-# FAST API APP
-app = FastAPI()
+from services.routes import router as api_router
+from core import config
+from core import tasks
 
 
-# CORS configuration
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+def get_application():
 
-# Endpoints Routes
-app.include_router(dummy_v1.router)
+    cfg = config.get_settings()
+    app = FastAPI(title=cfg.app_title, version=cfg.app_version)
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    app.add_event_handler("startup", tasks.create_start_app_handler(app))
+    app.add_event_handler("shutdown", tasks.create_stop_app_handler(app))
+
+    app.include_router(api_router, prefix=cfg.api_prefix)
+
+    # Default page
+    @app.get("/")
+    def read_root(request: Request):
+        url = request.url
+        return {
+            "Description": "Analyze-That-BFF",
+            "Docs": f"{url}docs"
+            }
+
+    return app
 
 
-# Default page
-@app.get("/")
-def read_root(request: Request):
-    url = request.url
-    return {
-        "Description": "Analyze-That-BFF",
-        "Docs": f"{url}docs"
-        }
-
-
-@app.get("/secured")
-# def get_secured(user: Auth0User = Security(get_auth0().get_user)):
-def get_secured(q: str, req: dict = Depends(get_req)):
-    return {
-        "req": f"{req}",
-        "q": q
-    }
+app = get_application()
