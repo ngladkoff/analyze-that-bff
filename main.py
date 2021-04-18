@@ -1,28 +1,38 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from services.routes import router as api_router
+from core import config
+from core import tasks
 
-from services.dummy.v1 import dummy_v1
 
-app = FastAPI()
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-]
+def get_application():
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    cfg = config.get_settings()
+    app = FastAPI(title=cfg.app_title, version=cfg.app_version)
 
-app.include_router(dummy_v1.router)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
-@app.get("/")
-def read_root(request: Request):
-    url = request.url
-    return {
-        "Description": "Analyze-That-BFF",
-        "Docs": f"{url}docs"
-        }
+    app.add_event_handler("startup", tasks.create_start_app_handler(app))
+    app.add_event_handler("shutdown", tasks.create_stop_app_handler(app))
+
+    app.include_router(api_router, prefix=cfg.api_prefix)
+
+    # Default page
+    @app.get("/")
+    def read_root(request: Request):
+        url = request.url
+        return {
+            "Description": "Analyze-That-BFF",
+            "Docs": f"{url}docs"
+            }
+
+    return app
+
+
+app = get_application()
