@@ -1,7 +1,10 @@
 from fastapi import APIRouter, Depends
 from typing import Optional
 from core.auth import get_req
+from core import logger as core_logger
 
+
+logger = core_logger.getLogger(__name__)
 router = APIRouter()
 
 DUMMYS = [
@@ -18,6 +21,7 @@ DUMMYS = [
 
 @router.get("/")
 def read_dummys(commons: dict = Depends(get_req)):
+    logger.info("v1_read_dummys")
     return DUMMYS
 
 

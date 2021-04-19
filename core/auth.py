@@ -3,9 +3,9 @@ from fastapi_auth0 import Auth0User, Auth0
 from . import config
 
 
-def get_auth0(settings: config.Settings = config.get_settings()):
-    return Auth0(domain=settings.auth0_domain,
-                 api_audience=settings.auth0_api_audience,
+def get_auth0():
+    return Auth0(domain=config.AUTH0_DOMAIN,
+                 api_audience=config.AUTH0_API_AUDIENCE,
                  scopes={'read:dummys': ''})
 
 

@@ -1,9 +1,9 @@
 from typing import Callable
 from fastapi import FastAPI
 from db import tasks as db_tasks
-import logging
+from . import logger as core_logger
 
-logger = logging.getLogger(__name__)
+logger = core_logger.getLogger(__name__)
 
 
 def create_start_app_handler(app: FastAPI) -> Callable:
