@@ -1,8 +1,16 @@
+# app
 fastapi
 uvicorn[standard]
-pytest
+pydantic
 fastapi-auth0
-python-dotenv
+email-validator
+# db
 databases[postgresql]
 SQLAlchemy
 alembic
+# dev
+pytest
+pytest-asyncio
+httpx
+asgi-lifespan
+psycopg2

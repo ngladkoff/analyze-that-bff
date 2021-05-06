@@ -4,10 +4,10 @@
 py -m pip install --user virtualenv
 
 ## Create virtual environment
-py -m venv env
+py -m venv venv
 
 ## Activate virtual environment
-.\env\scripts\activate.bat
+.\venv\scripts\activate.bat
 
 ## Install requirements
 pip install -r requirements.txt
@@ -28,6 +28,17 @@ copiar container_id
 
 docker exec -it 15f32cd4335c bash
 
-alembic revision -m "create_main_tables"
+-- solo la primera vez o para una migracion -- alembic revision -m "create_main_tables"
 
-alembic upgrade head
+-- siempre para actualizar la base -- alembic upgrade head
+
+## Conectar con la base de datos
+docker-compose exec analyze_db psql -h localhost -U analyze_db_user --dbname=analyze
+
+\l -> lista all databases
+\d+ -> list all tables in the current database
+\c postgres -> connect to the postgres database
+\d cleanings -> describe the cleanings table and the associated columns
+
+SELECT ... ; -> se ejecuta directo
+
