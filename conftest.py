@@ -11,6 +11,9 @@ from databases import Database
 import alembic
 from alembic.config import Config
 
+from db.repositories.games import GamesRepository
+from models.game import GameInDB, GameCreate
+
 
 # Apply migrations at beginning and end of testing session
 @pytest.fixture(scope="session")
@@ -26,10 +29,11 @@ def apply_migrations():
 
 # Create a new application for testing
 @pytest.fixture
+#def app(apply_migrations: None) -> FastAPI:
 def app(apply_migrations: None) -> FastAPI:
     from main import get_application
+    return get_application()
 
-    return  get_application()
 
 
 # Grab a reference to our database when needed
@@ -49,3 +53,12 @@ async def client(app: FastAPI) -> AsyncClient:
         ) as client:
             yield client
 
+
+@pytest.fixture
+async def test_game(db: Database) -> GameInDB:
+    game_repo = GamesRepository(db)
+    new_game = GameCreate(
+        name="fake game name", description="fake game description"
+    )
+
+    return await game_repo.create_game(new_game=new_game)

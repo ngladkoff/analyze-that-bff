@@ -9,15 +9,16 @@ class GameBase(CoreModel):
 
 class GameCreate(GameBase):
     name: str
+    description: str
 
 
 class GameUpdate(GameBase):
-    name: str
-    description: str
+    ...
 
 
 class GameInDB(IDModelMixin, GameBase):
     name: str
+    description: str
 
 
 class GamePublic(IDModelMixin, GameBase):

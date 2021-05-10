@@ -42,3 +42,10 @@ docker-compose exec analyze_db psql -h localhost -U analyze_db_user --dbname=ana
 
 SELECT ... ; -> se ejecuta directo
 
+# Ejecutar tests integración
+docker ps
+docker exec -it [CONTAINER_ID] bash
+
+python -m pytest -v
+
+
