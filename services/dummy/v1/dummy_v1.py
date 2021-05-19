@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from typing import Optional
-from core.auth import get_req
+from core.auth import get_req, get_auth0
 from core import logger as core_logger
 
 
@@ -19,10 +19,11 @@ DUMMYS = [
 ]
 
 
-@router.get("/")
+@router.get("/", dependencies=[Depends(get_auth0().implicit_scheme)])
 def read_dummys(commons: dict = Depends(get_req)):
     logger.info("v1_read_dummys")
-    return DUMMYS
+    print(commons)
+    return { "dummys": DUMMYS, "user": commons.get('user') }
 
 
 @router.get("/{id}")

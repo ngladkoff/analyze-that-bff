@@ -6,7 +6,7 @@ from . import config
 def get_auth0():
     return Auth0(domain=config.AUTH0_DOMAIN,
                  api_audience=config.AUTH0_API_AUDIENCE,
-                 scopes={'read:dummys': ''})
+                 scopes={'user:admin': ''})
 
 
 def get_req(request: Request,

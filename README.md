@@ -32,6 +32,8 @@ docker exec -it 15f32cd4335c bash
 
 -- siempre para actualizar la base -- alembic upgrade head
 
+-- para hacer un downgrade -- alembic downgrade base
+
 ## Conectar con la base de datos
 docker-compose exec analyze_db psql -h localhost -U analyze_db_user --dbname=analyze
 

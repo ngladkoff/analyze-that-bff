@@ -5,6 +5,7 @@ Revises:
 Create Date: 2021-04-19 00:37:05.394433
 
 """
+from typing import Tuple
 from alembic import op
 import sqlalchemy as sa
 
