@@ -1,6 +1,6 @@
 from fastapi import Security, Request
 from fastapi_auth0 import Auth0User, Auth0
-from . import config
+from core import config
 
 
 def get_auth0():

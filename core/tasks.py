@@ -1,7 +1,7 @@
 from typing import Callable
 from fastapi import FastAPI
 from db import tasks as db_tasks
-from . import logger as core_logger
+from core import logger as core_logger
 
 logger = core_logger.getLogger(__name__)
 
