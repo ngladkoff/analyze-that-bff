@@ -6,28 +6,30 @@ from db.repositories.base import BaseRepository
 from models.game import GameCreate, GameUpdate, GameInDB
 
 CREATE_GAME_QUERY = """
-    INSERT INTO games (name, description)
-    VALUES (:name, :description)
-    RETURNING id, name, description;
+    INSERT INTO games (name, description, token, icon)
+    VALUES (:name, :description, :token, :icon)
+    RETURNING id, name, description, token, icon;
 """
 
 GET_GAME_BY_ID_QUERY = """
-    SELECT id, name, description
+    SELECT id, name, description, token, icon
     FROM games
     WHERE id = :id;
 """
 
 GET_ALL_GAMES_QUERY = """
-    SELECT id, name, description
+    SELECT id, name, description, token, icon
     FROM games;
 """
 
 UPDATE_GAME_BY_ID_QUERY = """
     UPDATE games
     SET name         = :name,
-        description  = :description
+        description  = :description,
+        token        = :token,
+        icon         = :icon
     WHERE id = :id
-    RETURNING id, name, description;
+    RETURNING id, name, description, token, icon;
 """
 
 DELETE_GAME_BY_ID_QUERY = """
