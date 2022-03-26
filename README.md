@@ -3,21 +3,24 @@
 ## Install virtualenv
 <code>
 
-py -m pip install --user virtualenv
+py -m pip install --user virtualenv (win)
+python3.9 -m pip install --user virtualenv (wsl)
 
 </code>
 
 ## Create virtual environment
 <code>
 
-py -m venv venv
+py -m venv venv (win)
+python3.9 -m venv venv (wsl)
 
 </code>
 
 ## Activate virtual environment
 <code>
 
-.\venv\scripts\activate
+.\venv\scripts\activate (win)
+source ./venv/bin/activate (wsl)
 
 </code>
 
@@ -38,14 +41,14 @@ uvicorn main:app --reload
 ## Docker build image
 <code>
 
-docker build -t ngladkoffglb/analyze-that-bff .
+docker build -t ngladkoff/analyze-that-bff .
 
 </code>
 
 ## Docker run
 <code>
 
-docker run -it -p 8000:80 --rm --name analyze-bff ngladkoffglb/analyze-that-bff
+docker run -it -p 8000:80 --rm --name analyze-bff ngladkoff/analyze-that-bff
 
 </code>
 
